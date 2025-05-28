@@ -8,8 +8,8 @@
   --color-light: #fff;
 }
 
-img {
-  border-radius: 4px;
+.animate-progress {
+  animation: progress 2s ease-in-out infinite;
 }
 
 /*
