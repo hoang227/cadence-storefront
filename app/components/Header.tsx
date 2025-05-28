@@ -48,7 +48,7 @@ export function Header({
       setIsScrollingUp(currentScrollY < lastScrollY);
       setLastScrollY(currentScrollY);
 
-      setIsScrolled(currentScrollY > 50);
+      setIsScrolled(currentScrollY > 0);
     };
 
     window.addEventListener('scroll', handleScroll, {passive: true});
@@ -57,10 +57,7 @@ export function Header({
   }, [lastScrollY, isScrolled, asideType]);
 
   return (
-    <div
-      className={`fixed w-full z-40 transition-transform duration-500 ease-in-out
-        ${!isScrollingUp && isScrolled && asideType === 'closed' ? 'translate-y-full' : 'translate-y-0'}`}
-    >
+    <div className="fixed w-full z-40 transition-transform duration-500 ease-in-out translate-y-0">
       {/** Announcement bar */}
       <div
         className={`overflow-hidden transition-all duration-500 ease-in-out bg-brand-navy text-white
@@ -146,7 +143,6 @@ export function HeaderMenu({
   viewport: Viewport;
   publicStoreDomain: HeaderProps['publicStoreDomain'];
 }) {
-  const className = `header-menu-${viewport}`;
   const {close} = useAside();
 
   const baseClassName =
