@@ -95,7 +95,9 @@ function RecommendedProducts({
 }) {
   return (
     <div className="recommended-products">
-      <h2>Recommended Products</h2>
+      <h2 className="text-brand-gold font-playfair font-bold text-2xl">
+        Recommended Products
+      </h2>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
