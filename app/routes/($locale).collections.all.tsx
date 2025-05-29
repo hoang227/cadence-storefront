@@ -3,6 +3,7 @@ import {useLoaderData, type MetaFunction} from 'react-router';
 import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductItem} from '~/components/ProductItem';
+import CustomProductItem from '~/components/CustomProductItem';
 
 export const meta: MetaFunction<typeof loader> = () => {
   return [{title: `Hydrogen | Products`}];
@@ -51,19 +52,82 @@ export default function Collection() {
 
   return (
     <div className="collection">
-      <h1>Products</h1>
-      <PaginatedResourceSection
-        connection={products}
-        resourcesClassName="products-grid"
-      >
-        {({node: product, index}) => (
-          <ProductItem
-            key={product.id}
-            product={product}
-            loading={index < 8 ? 'eager' : undefined}
+      {/** Hero Section */}
+      <section className="relative h-[80vh] min-h-[600px] bg-brand-navy">
+        <div className="absolute inset-0">
+          <Image
+            alt="Craftsmanship"
+            className="absolute inset-0 w-full h-full object-cover opacity-70"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            loading="eager"
+            data={{
+              url: '/image/Image from Creator.jpeg',
+              width: 1920,
+              height: 1080,
+            }}
           />
-        )}
-      </PaginatedResourceSection>
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/50 to-brand-navy/80" />
+        </div>
+        <div className="relative container mx-auto px-4 h-full flex items-center">
+          <div className="max-w-2xl">
+            <h1 className="font-playfair text-4xl md:text-6xl text-white mb-6">
+              Artisanal Excellence
+            </h1>
+            <p className="font-source text-lg text-gray-200 mb-8 max-w-xl">
+              Each CADENCE piece embodies the pinnacle of shoemaking craft,
+              where time-honored techniques meet contemporary sophistication.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/** Collection Navigation */}
+      <section className="bg-brand-cream border-y border-brand-navy/10">
+        <div className="container mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center py-8 px-4 gap-4">
+            <div className="space-y-2">
+              <h2 className="font-playfair text-2xl text-brand-navy">
+                The collection
+              </h2>
+              <p className="font-source text-brand-navy/60">
+                Showing {products?.nodes?.length || 0} handcrafted pieces
+              </p>
+            </div>
+            <div className="flex items-center gap-6">
+              <button className="font-source text-sm text-brand-navy/60 hover:text-brand-navy transition-colors">
+                Filter
+              </button>
+              <button className="font-source text-sm text-brand-navy/60 hover:text-brand-navy transition-colors">
+                Sort
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/** Products Grid */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          {products && products.nodes && (
+            <PaginatedResourceSection
+              connection={products}
+              resourcesClassName="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16"
+            >
+              {({node: product, index}) => (
+                <CustomProductItem
+                  key={product.id}
+                  product={product}
+                  loading={index < 8 ? 'eager' : undefined}
+                />
+              )}
+            </PaginatedResourceSection>
+          )}
+        </div>
+      </section>
+
+      {/** Craftsmanship Section */}
+
+      {/** Heritage Banner */}
     </div>
   );
 }
@@ -83,6 +147,23 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
       url
       width
       height
+    }
+    images(first: 2) {
+      nodes {
+        id
+        altText
+        url
+        width
+        height
+      }
+    }
+    variants(first: 2) {
+      nodes {
+        selectedOptions {
+          name
+          value
+        }
+      }
     }
     priceRange {
       minVariantPrice {

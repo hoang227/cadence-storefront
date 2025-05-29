@@ -2,11 +2,18 @@ import {Image, Money} from '@shopify/hydrogen';
 import {ArrowRight} from 'lucide-react';
 import React from 'react';
 import {Link} from 'react-router';
-import {ProductItemFragment} from 'storefrontapi.generated';
+import {
+  CollectionItemFragment,
+  ProductItemFragment,
+  RecommendedProductFragment,
+} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
 
 type CustomProductItemProps = {
-  product: ProductItemFragment;
+  product:
+    | CollectionItemFragment
+    | ProductItemFragment
+    | RecommendedProductFragment;
   loading?: 'eager' | 'lazy';
   hidePrice?: boolean;
 };
@@ -17,9 +24,9 @@ const CustomProductItem = ({
   hidePrice,
 }: CustomProductItemProps) => {
   const variant = product.variants.nodes[0];
-  const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
-  const firstImage = product.featuredImage!;
-  const secondImage = product.images.nodes[1];
+  const variantUrl = useVariantUrl(product.handle, variant?.selectedOptions);
+  const firstImage = product.featuredImage;
+  const secondImage = product.images?.nodes?.[1];
 
   return (
     <Link
@@ -42,10 +49,10 @@ const CustomProductItem = ({
             />
             {secondImage && (
               <Image
-                alt={secondImage.altText || product.title + ' - Second Image'}
+                alt={secondImage.altText || `${product.title} - Second Image`}
                 data={secondImage}
                 className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500
-                group-hover:opacity-100"
+              group-hover:opacity-100"
                 loading={loading}
                 sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
               />
