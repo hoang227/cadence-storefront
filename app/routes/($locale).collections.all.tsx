@@ -1,9 +1,10 @@
 import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {useLoaderData, type MetaFunction} from 'react-router';
+import {Link, useLoaderData, type MetaFunction} from 'react-router';
 import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductItem} from '~/components/ProductItem';
 import CustomProductItem from '~/components/CustomProductItem';
+import {ArrowRight} from 'lucide-react';
 
 export const meta: MetaFunction<typeof loader> = () => {
   return [{title: `Hydrogen | Products`}];
@@ -126,8 +127,65 @@ export default function Collection() {
       </section>
 
       {/** Craftsmanship Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <Image
+                alt="Craftsmanship"
+                className="w-full"
+                data={{
+                  url: '/image/Shoe Mold.jpg',
+                }}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                loading="lazy"
+              />
+            </div>
+
+            <div className="max-w-xl">
+              <h2 className="font-playfair text-3xl mb-6">
+                Crafted by Master Artisans
+              </h2>
+              <p className="font-source text-gray-600 mb-8 loading-relaxed">
+                Each pair of shoes from CADENCE is the result of countless hours
+                of meticulous craftsmanship. From the first cut of leather to
+                the final hand-polish, our artisans bring decades of experience
+                to every stitch and seam. Working in small batches, they treat
+                each shoe not as a product, but as a piece of art—shaping,
+                assembling, and finishing with an unwavering commitment to
+                quality. It is this human touch that gives every pair its
+                distinct character and timeless elegance.
+              </p>
+              <Link
+                to="/pages/our-craft"
+                className="inline-flex items-center font-source font-medium text-brand-navy hover:text-brand-gold transition-colors duration-300"
+              >
+                Discover Our Process
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/** Heritage Banner */}
+      <section className="bg-brand-cream py-16 md:py-24">
+        <div className="container mx-auto px-4 ">
+          <div className="max-w-3xl mx-auto text-center">
+            <h3 className="font-playfair text-2xl md:text-3xl text-brand-navy mb-6">
+              A Legacy of Distinction
+            </h3>
+            <p className="font-source text-brand-navy/80 mb-4">
+              Each CADENCE creation represents over three decades of shoemaking
+              expertise, combining time-honored European craftsmanship with
+              contemporary refinement.
+            </p>
+            <p className="font-source text-brand-navy/60 text-sm">
+              Available for private consultation and bespoke commissions
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

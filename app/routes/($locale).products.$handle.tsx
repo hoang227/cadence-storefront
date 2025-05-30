@@ -9,11 +9,9 @@ import {
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
 import {ProductPrice} from '~/components/ProductPrice';
-import ProductImage from '~/components/ProductImage';
+import ProductImage, {GalleryImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
-import {GalleryImage} from '~/components/ProductImage';
-import {Suspense} from 'react';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [

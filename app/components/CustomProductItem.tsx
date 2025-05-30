@@ -37,7 +37,7 @@ const CustomProductItem = ({
     >
       {/** Image Container with hover effects */}
       <div className="group relative aspect-square overflow-hidden bg-brand-cream mb-6">
-        {firstImage && (
+        {firstImage ? (
           <>
             <Image
               alt={firstImage.altText || product.title}
@@ -47,7 +47,7 @@ const CustomProductItem = ({
               loading={loading}
               sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
             />
-            {secondImage && (
+            {secondImage ? (
               <Image
                 alt={secondImage.altText || `${product.title} - Second Image`}
                 data={secondImage}
@@ -56,6 +56,8 @@ const CustomProductItem = ({
                 loading={loading}
                 sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
               />
+            ) : (
+              <div className="w-full h-full bg-brand-cream animate-pulse" />
             )}
             {/** Overlay on hover */}
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 ease-out"></div>
@@ -69,6 +71,8 @@ const CustomProductItem = ({
               </div>
             </div>
           </>
+        ) : (
+          <div className="w-full h-full bg-brand-cream animate-pulse" />
         )}
 
         {/** Corner accents */}
